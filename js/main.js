@@ -24,7 +24,8 @@ export default class Main {
   init(){
     this.director.isGameOver = false;
     this.dataStore
-      .put('background', Background);
+      .put('background', Background); 
+
     this.registerEvent();
     this.director.run();
   }
@@ -33,6 +34,7 @@ export default class Main {
    * 首次资源加载
    */
   onResourceFirstLoaded(map){
+
     this.dataStore.canvas = this.canvas;
     this.dataStore.ctx = this.ctx;
     this.dataStore.res = map;

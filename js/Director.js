@@ -31,6 +31,8 @@ export default class Director {
     this.check();
     if (!this.isGameOver) {
       this.dataStore.get('background').draw();
+      this.dataStore.get('nav-back').draw();
+      this.dataStore.get('nav-title').draw();
 
       let timer = requestAnimationFrame(() => this.run());
       this.dataStore.put('timer', timer);

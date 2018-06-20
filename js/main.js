@@ -1,4 +1,7 @@
 import Background from './runtime/Background'
+import NavBack from './runtime/NavBack'
+import NavTitle from './runtime/NavTitle'
+
 import Director from './Director'
 import ResourceLoader from './base/ResourceLoader'
 import DataStore from './base/DataStore'
@@ -24,7 +27,9 @@ export default class Main {
   init(){
     this.director.isGameOver = false;
     this.dataStore
-      .put('background', Background); 
+      .put('background', Background)
+      .put('nav-back', NavBack)
+      .put('nav-title', NavTitle)
 
     this.registerEvent();
     this.director.run();

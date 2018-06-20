@@ -1,6 +1,7 @@
 import Background from './runtime/Background'
 import NavBack from './runtime/NavBack'
 import NavTitle from './runtime/NavTitle'
+import RuleContent from './runtime/RuleContent'
 
 import Director from './Director'
 import ResourceLoader from './base/ResourceLoader'
@@ -26,10 +27,12 @@ export default class Main {
    */
   init(){
     this.director.isGameOver = false;
+    // 设置数据
     this.dataStore
       .put('background', Background)
       .put('nav-back', NavBack)
       .put('nav-title', NavTitle)
+      .put('rule-content', RuleContent)
 
     this.registerEvent();
     this.director.run();

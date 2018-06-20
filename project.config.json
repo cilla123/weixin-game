@@ -10,7 +10,7 @@
 	"compileType": "game",
 	"libVersion": "game",
 	"appid": "touristappid",
-	"projectname": "xiaoyouxi-demo",
+	"projectname": "wenda",
 	"condition": {
 		"search": {
 			"current": -1,

@@ -46,7 +46,7 @@ export default class Main {
     this.dataStore.canvas = this.canvas;
     this.dataStore.ctx = this.ctx;
     this.dataStore.res = map;
-    // this.createBackgroundMusic();
+    this.createBackgroundMusic();
 
     this.init();
   }

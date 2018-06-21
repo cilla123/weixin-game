@@ -9,7 +9,7 @@ export default class Sprite {
         srcW = 0,
         srcH = 0,
         x = 0, y = 0,
-        width = 0, height = 0,sX = 0,sY = 0) {
+        width = 0, height = 0, sX = 0, sY = 0) {
         this.dataStore = DataStore.getInstance();
         this.ctx = this.dataStore.ctx;
         this.img = img;
@@ -89,5 +89,40 @@ export default class Sprite {
             y,
             width,
             height)
+    }
+
+    // 画圆角方形
+    Rect(x, y, w, h) {
+        return {
+            x: x,
+            y: y,
+            width: w,
+            height: h
+        };
+    }
+
+    Point(x, y) {
+        return {
+            x: x,
+            y: y
+        };
+    }
+    drawRoundedRect(x, y, w, h, r, bgColor) {
+        let rect = this.Rect(x, y, w, h)
+        let ptA = this.Point(rect.x + r, rect.y);
+        let ptB = this.Point(rect.x + rect.width, rect.y);
+        let ptC = this.Point(rect.x + rect.width, rect.y + rect.height);
+        let ptD = this.Point(rect.x, rect.y + rect.height);
+        let ptE = this.Point(rect.x, rect.y);
+
+        this.ctx.moveTo(ptA.x, ptA.y);
+        this.ctx.fillStyle = bgColor;
+        this.ctx.strokeStyle = bgColor;
+        this.ctx.arcTo(ptB.x, ptB.y, ptC.x, ptC.y, r);
+        this.ctx.arcTo(ptC.x, ptC.y, ptD.x, ptD.y, r);
+        this.ctx.arcTo(ptD.x, ptD.y, ptE.x, ptE.y, r);
+        this.ctx.arcTo(ptE.x, ptE.y, ptA.x, ptA.y, r);
+        this.ctx.fill();
+        this.ctx.stroke();
     }
 }

@@ -1,6 +1,7 @@
 import Sprite from "../base/Sprite";
 import DataStore from "../base/DataStore";
 import AllEvent from '../event'
+import Api from '../utils/api'
 /**
  * 规则内容
  */
@@ -10,7 +11,6 @@ export default class RuleContent extends Sprite {
     super();
     this.ctx = DataStore.getInstance().ctx;
     this.ruleText = '--'
-    this.isGetRuleSuccess = false
   }
 
   drawPage() {
@@ -20,9 +20,8 @@ export default class RuleContent extends Sprite {
     this.createBtnImg()
     this.createBtnText()
     this.createTitileText()
-
-    this.getRule()
-    this.registerEvent()
+    this.getLogin()
+    this.addEvent()
   }
 
   /**
@@ -55,7 +54,7 @@ export default class RuleContent extends Sprite {
   createTitileText() {
     this.ctx.font = '18px Arial';
     this.ctx.fillStyle = '#333';
-    this.ctx.textAlign= 'center'
+    this.ctx.textAlign = 'center'
     this.ctx.fillText(
       '游戏规则',
       184,
@@ -69,22 +68,13 @@ export default class RuleContent extends Sprite {
   createRuleText() {
     this.ctx.font = '13px Arial';
     this.ctx.fillStyle = '#333';
-    this.ctx.textAlign= 'left'
+    this.ctx.textAlign = 'left'
     this.ctx.fillText(
       this.ruleText,
       62,
       260,
       311
     );
-  }
-
-  // 点击开始事件
-  registerEvent() {
-    wx.onTouchStart((res) => {
-      const x = [30, 187]
-      const y = [532, 581]
-      AllEvent.getInstance().start(res, x, y)
-    })
   }
 
   /**
@@ -101,7 +91,7 @@ export default class RuleContent extends Sprite {
   createBtnText() {
     this.ctx.font = '18px Arial';
     this.ctx.fillStyle = '#fff';
-    this.ctx.textAlign= 'center'
+    this.ctx.textAlign = 'center'
     this.ctx.fillText(
       '开始答题',
       110,
@@ -109,28 +99,36 @@ export default class RuleContent extends Sprite {
     );
   }
 
+  // 登录
+  getLogin() {
+    const token = wx.getStorageSync('token')
+    if (!token) {
+      Api.login().then((res) => {
+        const data = res.data.sessionId
+        wx.setStorageSync('token', data)
+        this.getRule()
+      })
+    } else {
+      this.getRule()
+    }
+  }
+
+  // 添加事件
+  addEvent() {
+    const x = [30, 187]
+    const y = [532, 581]
+    wx.onTouchStart((res) => {
+      AllEvent.getInstance().start(res, x, y)
+    })
+  }
+
   /**
    * 获取规则
    */
   getRule() {
-    const _this = this
-    if (!_this.isGetRuleSuccess) {
-      wx.request({
-        url: 'http://123.207.248.168:8081/prfinance/api/app/que/getQueRule.json',
-        method: 'POST',
-        data: {},
-        header: {
-          'sessionId': 'aa7b5f32d32b9f9f38e3e345d06ad972',
-        },
-        success(response) {
-          response = response.data
-          if (response.status == "2000000") {
-            _this.isGetRuleSuccess = true
-            _this.ruleText = response.data
-            _this.createRuleText()
-          }
-        }
-      });
-    }
+    Api.introduction().then(res => {
+      this.ruleText = res.data
+      this.createRuleText()
+    })
   }
 }

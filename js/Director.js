@@ -1,7 +1,7 @@
 import DataStore from './base/DataStore'
-// import Index from './pages/index'
+import Index from './pages/index'
 // import Result from './pages/Result'
-import Result from './pages/Dati'
+// import Result from './pages/Dati'
 /**
  * 导演类
  */
@@ -33,8 +33,7 @@ export default class Director {
     this.check();
     if (!this.isGameOver) {
       // 画图
-      // const IndexPage = Index.getInstance()
-      const IndexPage = Result.getInstance()
+      const IndexPage = Index.getInstance()
       IndexPage.init()
 
       // let timer = requestAnimationFrame(() => this.run());

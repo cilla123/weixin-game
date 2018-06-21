@@ -9,4 +9,11 @@ export const Resources = [
   ['end-btn', 'res/button_again@3x.png'],
   ['coins-bg-img', 'res/coins_bg_img@3x.png'],
   ['answer-bgl-img', 'res/answer_bgl_img@3x.png'],
+  ['button-default', 'res/button_default@3x.png'],
+  ['button-wrong', 'res/button_wrong@3x.png'],
+  ['button-right', 'res/button_right@3x.png'],
+  ['TIPS_ic', 'res/TIPS_ic@3x.png'],
+  ['add10s_ic', 'res/add10s_ic@3x.png'],
+  ['AB_ic', 'res/AB_ic@3x.png'],
+  ['title_ic', 'res/title_ic@3x.png'],
 ]

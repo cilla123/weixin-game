@@ -4,6 +4,7 @@ import NavTitle from './runtime/NavTitle'
 import RuleContent from './runtime/RuleContent'
 import Footer from './runtime/Footer'
 import ResultNr from './runtime/ResultNr'
+import DatiNr from './runtime/DatiNr'
 
 import Director from './Director'
 import ResourceLoader from './base/ResourceLoader'
@@ -37,6 +38,7 @@ export default class Main {
       .put('nav-title', NavTitle)
       .put('result-nr', ResultNr)
       .put('rule-content', RuleContent)
+      .put('dati-nr', DatiNr)
 
     this.registerEvent();
     this.director.run();

@@ -1,6 +1,7 @@
 import DataStore from './base/DataStore'
-import Index from './pages/index'
-import Result from './pages/Result'
+// import Index from './pages/index'
+// import Result from './pages/Result'
+import Result from './pages/Dati'
 /**
  * 导演类
  */

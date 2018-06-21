@@ -8,4 +8,5 @@ export const Resources = [
   ['window-img', 'res/end_window_img@3x.png'],
   ['end-btn', 'res/button_again@3x.png'],
   ['coins-bg-img', 'res/coins_bg_img@3x.png'],
+  ['answer-bgl-img', 'res/answer_bgl_img@3x.png'],
 ]

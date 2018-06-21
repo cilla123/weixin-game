@@ -20,7 +20,7 @@ export default class AllEvent {
   }
 
   // 开始游戏
-  start(res,x,y) {
+  start(res, x, y) {
     const touchesX = res.touches[0].clientX
     const touchesY = res.touches[0].clientY
     if (touchesX >= x[0] && touchesX <= x[1] && touchesY >= y[0] && touchesY <= y[1]) {

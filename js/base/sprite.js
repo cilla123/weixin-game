@@ -4,12 +4,12 @@ import DataStore from "./DataStore";
 export default class Sprite {
 
     constructor(img = null,
-                srcX = 0,
-                srcY = 0,
-                srcW = 0,
-                srcH = 0,
-                x = 0, y = 0,
-                width = 0, height = 0) {
+        srcX = 0,
+        srcY = 0,
+        srcW = 0,
+        srcH = 0,
+        x = 0, y = 0,
+        width = 0, height = 0,sX = 0,sY = 0) {
         this.dataStore = DataStore.getInstance();
         this.ctx = this.dataStore.ctx;
         this.img = img;
@@ -21,9 +21,11 @@ export default class Sprite {
         this.y = y;
         this.width = width;
         this.height = height;
+        this.sX = sX;
+        this.sY = sY;
     }
 
-    static getImage(key){
+    static getImage(key) {
         return DataStore.getInstance().res.get(key);
     }
 
@@ -39,14 +41,14 @@ export default class Sprite {
      * height 要使用的高度
      */
     draw(img = this.img,
-         srcX = this.srcX,
-         srcY = this.srcY,
-         srcW = this.srcW,
-         srcH = this.srcH,
-         x = this.x,
-         y = this.y,
-         width = this.width,
-         height = this.height) {
+        srcX = this.srcX,
+        srcY = this.srcY,
+        srcW = this.srcW,
+        srcH = this.srcH,
+        x = this.x,
+        y = this.y,
+        width = this.width,
+        height = this.height) {
         this.ctx.drawImage(
             img,
             srcX,
@@ -58,5 +60,34 @@ export default class Sprite {
             width,
             height
         );
+    }
+
+    // 画圆形图片
+    circle_image(
+        img = this.img,
+        srcX = this.srcX,
+        srcY = this.srcY,
+        srcW = this.srcW,
+        srcH = this.srcH,
+        x = this.x,
+        y = this.y,
+        width = this.width,
+        height = this.height,
+        sX = this.sX,
+        sY = this.sY) {
+        this.ctx.save()
+        this.ctx.arc(sX, sY, width / 2, 0, Math.PI * 2, false)
+        this.ctx.clip()
+        this.ctx.stroke()
+        this.ctx.drawImage(
+            img,
+            srcX,
+            srcY,
+            srcW,
+            srcH,
+            x,
+            y,
+            width,
+            height)
     }
 }

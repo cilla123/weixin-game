@@ -10,9 +10,10 @@ export default class NavTitle {
     draw() {
         this.ctx.font = '18px Arial';
         this.ctx.fillStyle = '#fefefe';
+        this.ctx.textAlign = 'center'
         this.ctx.fillText(
             this.title,
-            DataStore.getInstance().canvas.width / 2.5,
+            DataStore.getInstance().canvas.width / 2,
             50,
         );
     }

@@ -1,5 +1,6 @@
 import DataStore from './base/DataStore'
-
+import Index from './pages/index'
+import Result from './pages/Result'
 /**
  * 导演类
  */
@@ -31,13 +32,12 @@ export default class Director {
     this.check();
     if (!this.isGameOver) {
       // 画图
-      this.dataStore.get('background').draw();
-      this.dataStore.get('nav-back').draw();
-      this.dataStore.get('nav-title').draw();
-      this.dataStore.get('rule-content').drawPage();
+      // const IndexPage = Index.getInstance()
+      const IndexPage = Result.getInstance()
+      IndexPage.init()
 
-      let timer = requestAnimationFrame(() => this.run());
-      this.dataStore.put('timer', timer);
+      // let timer = requestAnimationFrame(() => this.run());
+      // this.dataStore.put('timer', timer);
     }else {
       console.log('游戏结束');
       this.dataStore.destroy();

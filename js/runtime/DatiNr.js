@@ -10,18 +10,11 @@ export default class DatiNr extends Sprite {
 
     this.ctx = DataStore.getInstance().ctx
     this.canvas = DataStore.getInstance().canvas
-    this.name = '的阿斯'
-    this.details = {}
-    this.chengji = [
-      '成绩',
-      '积分',
-      '现金',
-      '代币'
-    ]
   }
 
   drawPage() {
     this.createBox()
+    this.createTime('00:12')
   }
 
   /**
@@ -34,18 +27,20 @@ export default class DatiNr extends Sprite {
   }
 
   /**
-   * 创建人物名称
+   * 创建倒计时
    */
-  createName() {
+  createTime(time) {
     const canvasWidth = this.canvas.width / 2
-    this.ctx.font = '18px Arial';
-    this.ctx.fillStyle = '#fff';
-    this.ctx.textBaseline = 'middle'
+    this.ctx.font = '33px Arial'
+    this.ctx.fillStyle = '#fff'
+    this.ctx.textAlign = 'center'
     this.ctx.fillText(
-      this.name,
-      canvasWidth - 10,
-      90,
+      time,
+      canvasWidth,
+      260 / 2,
     );
   }
+
+
 
 }

@@ -16,4 +16,7 @@ export const Resources = [
   ['add10s_ic', 'res/add10s_ic@3x.png'],
   ['AB_ic', 'res/AB_ic@3x.png'],
   ['title_ic', 'res/title_ic@3x.png'],
+  ['button_close_ic', 'res/button_close_ic@3x.png'],
+  ['window_img', 'res/window_img@3x.png'],
+  ['button_check', 'res/button_check@3x.png'],
 ]

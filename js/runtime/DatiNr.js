@@ -1,6 +1,7 @@
 import Sprite from "../base/Sprite";
 import DataStore from "../base/DataStore";
 import DaTi from '../pages/Dati'
+import AllEvent from '../event'
 
 /**
  *  答题
@@ -12,38 +13,50 @@ export default class DatiNr extends Sprite {
     this.ctx = DataStore.getInstance().ctx
     this.canvas = DataStore.getInstance().canvas
     this.data = ''
-    this.current = 0
-    this.time = {
-      time: '00:00',
-      timer: null,
-      currentTime: 0
-    }
+    this.time = ''
+  }
+
+  // 初始化赋值
+  init() {
+    this.data = this.dataStore.get('dati')
+    this.time = this.dataStore.get('time')
   }
 
   drawPage() {
-    this.data = this.dataStore.get('dati')
-    this.time.currentTime = this.data.time
+    this.init()
 
     this.createBox()
     this.createDaTiBox()
-    this.createDaTiText(`${this.current+1}${this.data.topicResultList[this.current].topicName}`)
-    this.createTimeDingShiQi()
+    this.createDaTiText(`${this.time.current+1}${this.data.topicResultList[this.time.current].topicName}`)
     this.createTishi()
     this.createShiJian()
     this.createHuaDiao()
     this.createJinDu()
     this.createDaAn()
+    if (!this.time.timer) {
+      this.createTimeDingShiQi()
+    }
   }
 
   // 定时器
   createTimeDingShiQi() {
+    this.jisuanshijian(this.time.currentTime)
+    this.createTime(this.time.time)
     this.time.timer = setInterval(() => {
       if (this.time.currentTime == 0) {
         clearInterval(this.time.timer)
+        this.time.timer = null
+        // 时间到了
+        this.dataStore.put('ejectText1', '挑战失败！')
+        const AllEvent1 = AllEvent.getInstance()
+        console.log(AllEvent1)
+        AllEvent1.getAnswer({
+          id: 0
+        }, 2)
         return false
       }
-      // this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
-      // DaTi.getInstance().init()
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+      DaTi.getInstance().init()
 
       this.time.currentTime -= 1
       this.jisuanshijian(this.time.currentTime)
@@ -71,9 +84,11 @@ export default class DatiNr extends Sprite {
 
   // 创建答案
   createDaAn() {
-    const list = this.dataStore.get('dati').topicResultList[this.current]
+    const list = this.dataStore.get('dati').topicResultList[this.time.current]
+    const wrongAnswer = this.dataStore.get('wrongAnswer') || {}
     list.answerList.forEach((item, index) => {
-      this.createChange(item.name, index)
+      if (wrongAnswer[item.id]) item.btn = 2
+      this.createChange(item.name, index, item.btn)
     })
   }
 
@@ -125,14 +140,14 @@ export default class DatiNr extends Sprite {
       canvasWidth - 110,
       212,
       200
-    );
+    )
   }
 
   /**
    * 创建选择按钮
    */
   createChange(text, i, btn) {
-    const image = Sprite.getImage(btn || 'button-default')
+    const image = Sprite.getImage(this.btnColor(btn) || 'button-default')
     const canvasWidth = this.canvas.width / 2
     let xuanze = this.xuanxian(i)
     this.draw(image, 0, 0, image.width, image.height, canvasWidth - 538 / 4, 602 / 2 + 62 * i, 538 / 2, 98 / 2)
@@ -148,6 +163,25 @@ export default class DatiNr extends Sprite {
     );
   }
 
+  // 判断按钮颜色是否正确
+  btnColor(key) {
+    let color = ''
+    key = parseInt(key)
+
+    switch (key) {
+      // 正确
+      case 1:
+        color = 'button-right'
+        break;
+        // 错误答案
+      case 2:
+        color = 'button-wrong'
+        break;
+      default:
+        break;
+    }
+    return color
+  }
 
   /**
    * 创建提示锦囊

@@ -63,32 +63,24 @@ export default class Sprite {
     }
 
     // 画圆形图片
-    circle_image(
-        img = this.img,
-        srcX = this.srcX,
-        srcY = this.srcY,
-        srcW = this.srcW,
-        srcH = this.srcH,
-        x = this.x,
-        y = this.y,
-        width = this.width,
-        height = this.height,
-        sX = this.sX,
-        sY = this.sY) {
-        this.ctx.save()
-        this.ctx.arc(sX, sY, width / 2, 0, Math.PI * 2, false)
-        this.ctx.clip()
-        this.ctx.stroke()
-        this.ctx.drawImage(
-            img,
-            srcX,
-            srcY,
-            srcW,
-            srcH,
-            x,
-            y,
-            width,
-            height)
+    huayuan(x, y, w, h, r) {
+        var min_size = Math.min(w, h);
+        if (r > min_size / 2) r = min_size / 2;
+        // 开始绘制
+        this.ctx.beginPath()
+        this.ctx.moveTo(x + r, y);
+        this.ctx.arcTo(x + w, y, x + w, y + h, r);
+        this.ctx.arcTo(x + w, y + h, x, y + h, r);
+        this.ctx.arcTo(x, y + h, x, y, r);
+        this.ctx.arcTo(x, y, x + w, y, r);
+        this.ctx.closePath();
+    }
+
+    drawYuan(obj, x, y, w, d) {
+        let pattern = this.ctx.createPattern(obj, "no-repeat");
+        this.huayuan(x, y, w, d, w / 2);
+        this.ctx.fillStyle = pattern;
+        this.ctx.fill();
     }
 
     // 画圆角方形
@@ -114,7 +106,7 @@ export default class Sprite {
         let ptC = this.Point(rect.x + rect.width, rect.y + rect.height);
         let ptD = this.Point(rect.x, rect.y + rect.height);
         let ptE = this.Point(rect.x, rect.y);
-
+        this.ctx.beginPath()
         this.ctx.moveTo(ptA.x, ptA.y);
         this.ctx.fillStyle = bgColor;
         this.ctx.strokeStyle = bgColor;
@@ -124,5 +116,6 @@ export default class Sprite {
         this.ctx.arcTo(ptE.x, ptE.y, ptA.x, ptA.y, r);
         this.ctx.fill();
         this.ctx.stroke();
+        this.ctx.closePath();
     }
 }

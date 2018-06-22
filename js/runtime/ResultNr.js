@@ -10,8 +10,8 @@ export default class ResultNr extends Sprite {
 
     this.ctx = DataStore.getInstance().ctx
     this.canvas = DataStore.getInstance().canvas
-    this.name = '的阿斯'
-    this.details = {}
+    this.dataStore = DataStore.getInstance()
+    this.user = {}
     this.chengji = [
       '成绩',
       '积分',
@@ -21,24 +21,40 @@ export default class ResultNr extends Sprite {
   }
 
   drawPage() {
-    this.createJinQian()
+    this.user = this.dataStore.get('user') || {}
     this.createPeopleImg()
+    this.createJinQian()
     this.createName()
     this.createDaTiJieGuo()
     this.createBtn()
-    for (let i = 0; i < 4; i++) {
-      this.createChengji(this.chengji[i], '0', i)
-    }
+    this.showFenShu()
+  }
+
+  // 显示分数
+  showFenShu() {
+    const {
+      user
+    } = this
+    let arr = [user.score, user.integral, user.balance, user.tokens]
+
+    arr.forEach((item, index) => {
+      let f = ''
+      if (index) f = '+'
+      this.createChengji(this.chengji[index], `${f}${item}`, index)
+    })
   }
 
   /**
    * 创建人物头像
    */
   createPeopleImg() {
-    const image = Sprite.getImage('start-btn');
+    const image = wx.createImage()
+    // const image = Sprite.getImage('window-img')
     const canvasWidth = this.canvas.width / 2
-    this.circle_image(image, 0, 0, image.width, image.height, canvasWidth - 110 / 2, 80, 33, 33, canvasWidth - 70 / 2, 90);
-    this.ctx.restore()
+    image.src = this.user.avatar
+    // this.ctx.save()
+    this.drawYuan(image, canvasWidth - 120 / 4, 80, 66 / 2, 66 / 2);
+    // this.ctx.restore()
   }
 
   /**
@@ -48,11 +64,12 @@ export default class ResultNr extends Sprite {
     const canvasWidth = this.canvas.width / 2
     this.ctx.font = '18px Arial';
     this.ctx.fillStyle = '#fff';
+    this.ctx.textAlign = 'left'
     this.ctx.textBaseline = 'middle'
     this.ctx.fillText(
-      this.name,
-      canvasWidth - 10,
-      90,
+      this.user.nickname,
+      canvasWidth + 10,
+      80 + 66 / 4,
     );
   }
 

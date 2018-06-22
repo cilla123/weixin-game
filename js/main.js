@@ -4,6 +4,7 @@ import NavTitle from './runtime/NavTitle'
 import RuleContent from './runtime/RuleContent'
 import Footer from './runtime/Footer'
 import ResultNr from './runtime/ResultNr'
+import EjectBox from './runtime/EjectBox'
 import DatiNr from './runtime/DatiNr'
 
 import Director from './Director'
@@ -39,6 +40,7 @@ export default class Main {
       .put('result-nr', ResultNr)
       .put('rule-content', RuleContent)
       .put('dati-nr', DatiNr)
+      .put('eject-box', EjectBox)
 
     this.registerEvent();
     this.director.run();

@@ -99,6 +99,7 @@ export default class AllEvent {
     setTimeout(() => {
       if (time.current >= listData.count) {
         console.log('答题完了')
+        this.isDaCuoHuoTiShi(2)
         return false
       }
       time.current += 1

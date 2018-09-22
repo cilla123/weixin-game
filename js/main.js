@@ -1,4 +1,4 @@
-import Background from './runtime/Background'
+import Background from './runtime/background'
 import NavBack from './runtime/NavBack'
 import NavTitle from './runtime/NavTitle'
 import RuleContent from './runtime/RuleContent'
